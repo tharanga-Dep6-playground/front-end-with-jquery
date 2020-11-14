@@ -1,4 +1,4 @@
-/*!
+/*
  *             DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
  *                     Version 2, December 2004
  *
@@ -17,95 +17,32 @@
 /**
  * @author : Ranjith Suranga <suranga@ijse.lk>
  * @since : 11/15/20
-**/
-
-@import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
+ **/
 
 /*===============================================================================
- * Global
+ * Global Variables
  *===============================================================================*/
 
-* {
-  font-family: 'Ubuntu', sans-serif;
-}
-
-html {
-  font-size: 14px;
-}
+// Todo: add all global variable declaration here
 
 /*===============================================================================
- * Header
+ * Init
  *===============================================================================*/
 
-header {
-  padding-top: 20px;
-  border: {
-    bottom: 1px solid lightgray;
-  }
+init();
+
+function init(){
+    // Todo: add the initialization code if any
 }
 
 /*===============================================================================
- * Main
+ * Event Handlers and Timers
  *===============================================================================*/
 
-main {
-  margin-top: 50px;
-
-  .row > div:first-child {
-    border-right: 1px solid lightgray;
-  }
-
-  h3 {
-    padding: 10px;
-    border-radius: 10px;
-    text-align: center;
-    margin-bottom: 20px;
-    background-color: rgb(251, 181, 52);
-  }
-
-  #tbl-customers {
-
-    tbody {
-      cursor: pointer;
-    }
-
-    thead tr {
-      background-color: lightgrey;
-
-      th {
-        border-bottom-color: black;
-      }
-    }
-
-    td {
-      vertical-align: middle;
-    }
-
-    td:first-child,
-    th:first-child {
-      width: 75px;
-      text-align: center;
-    }
-
-    td:last-child,
-    th:last-child {
-      position: relative;
-      width: 75px;
-      text-align: center;
-    }
-  }
-}
+// Todo: add all event listeners and handlers here
 
 /*===============================================================================
- * Footer
+ * Functions
  *===============================================================================*/
 
-footer {
-  text-align: center;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 10px;
-  border-top: 1px solid lightgrey;
-}
+// Todo: add all functions
