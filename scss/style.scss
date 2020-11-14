@@ -4,25 +4,45 @@
   font-family: 'Roboto', sans-serif;
 }
 
-header{
+header {
   padding-top: 20px;
-  border:{
+  border: {
     bottom: 1px solid lightgray;
   }
 }
 
-main{
+main {
   margin-top: 50px;
 
-  .row>div:first-child{
+  .row > div:first-child {
     border-right: 1px solid lightgray;
   }
 
-  h3{
+  h3 {
     padding: 10px;
     border-radius: 10px;
     text-align: center;
     margin-bottom: 20px;
     background-color: rgb(251, 181, 52);
+  }
+
+  #tbl-customers {
+
+    tbody{
+      cursor: pointer;
+    }
+
+    thead tr{
+      background-color: lightgrey;
+      th{
+        border-bottom-color: black;
+      }
+    }
+
+    td:first-child,
+    th:first-child {
+      width: 75px;
+      text-align: center;
+    }
   }
 }
