@@ -65,10 +65,6 @@ main {
 
   #tbl-customers {
 
-    tbody {
-      cursor: pointer;
-    }
-
     thead tr {
       background-color: lightgrey;
 
@@ -81,13 +77,11 @@ main {
       vertical-align: middle;
     }
 
-    td:first-child,
     th:first-child {
       width: 75px;
       text-align: center;
     }
 
-    td:last-child,
     th:last-child {
       position: relative;
       width: 75px;
