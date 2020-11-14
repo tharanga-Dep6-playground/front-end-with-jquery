@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, scale=1.0" name="viewport">
+    <title>DOM Assignment 1</title>
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+<header class="container">
+    <div class="row">
+        <div class="col-12 text-center">
+            <h2>DOM Manipulation - In Class Assignment I</h2>
+        </div>
+    </div>
+</header>
+<main class="container">
+    <div class="row">
+        <div class="col-12 col-lg-4">
+            <h3>Manage Customers</h3>
+            <div class="form-group">
+                <label for="txtCustomerId">Customer ID</label>
+                <input  class="form-control" placeholder="Customer ID should follow the pattern CXXX" id="txtCustomerId" type="text">
+            </div>
+            <div class="form-group">
+                <label for="txtCustomerName">Customer Name</label>
+                <input class="form-control" id="txtCustomerName" type="text">
+            </div>
+            <div class="form-group">
+                <label for="txtCustomerAddress">Customer Address</label>
+                <input class="form-control" id="txtCustomerAddress" type="text">
+            </div>
+            <div class="form-group">
+                <button id="btnSave" class="btn btn-primary" type="button">Save</button>
+            </div>
+        </div>
+        <div class="col-12 col-lg-8">
+            <table id="tblCustomers" class="table table-hover table-bordered">
+                <thead>
+                <tr>
+                    <td>ID</td>
+                    <td>Name</td>
+                    <td>Address</td>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+<script src="js/manage-customer-controller.js"></script>
+</body>
+</html>
