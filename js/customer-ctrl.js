@@ -57,11 +57,14 @@ btnSave.addEventListener("click",saveCustomer);
 function saveCustomer(){
     if(txtAddress.value.length==0){
         txtAddress.focus();
-    }
-    if(txtName.value.length==0){
-        txtName.focus();
-    }
-    if(txtID.value.length==0){
-        txtID.focus();
+        txtAddress.classList.add("invalid");
+    }else if((/[^A-Za-z .]/).test(txtAddress.value)){
+        txtAddress.focus();
+        txtAddress.select();
+        txtAddress.classList.add("invalid");
+    }else if(txtAddress.value.trim().replace(' ',"").length<3){
+        txtAddress.focus();
+        txtAddress.select();
+        txtAddress.classList.add("invalid");
     }
 }
