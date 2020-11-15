@@ -25,6 +25,12 @@
 
 // Todo: add all global variable declaration here
 
+var btnSave = document.getElementById("btn-save");
+var btnClear = document.getElementById("btn-clear");
+var txtID = document.getElementById("txt-id");
+var txtName = document.getElementById("txt-name");
+var txtAddress = document.getElementById("txt-address");
+
 /*===============================================================================
  * Init
  *===============================================================================*/
@@ -33,6 +39,7 @@ init();
 
 function init(){
     // Todo: add the initialization code if any
+    txtID.focus();
 }
 
 /*===============================================================================
@@ -40,9 +47,21 @@ function init(){
  *===============================================================================*/
 
 // Todo: add all event listeners and handlers here
+btnSave.addEventListener("click",saveCustomer);
 
 /*===============================================================================
  * Functions
  *===============================================================================*/
 
 // Todo: add all functions
+function saveCustomer(){
+    if(txtAddress.value.length==0){
+        txtAddress.focus();
+    }
+    if(txtName.value.length==0){
+        txtName.focus();
+    }
+    if(txtID.value.length==0){
+        txtID.focus();
+    }
+}
