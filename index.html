@@ -24,17 +24,23 @@
                 <div class="form-group">
                     <label for="txt-id">Customer ID</label>
                     <input class="form-control" id="txt-id" placeholder="Eg. C001" type="text">
-                    <small class="form-text text-muted">
+                    <small id="helper-txt-txtID" class="form-text text-muted">
                         The Customer ID should follow the pattern CXXX; X={0-9}
                     </small>
                 </div>
                 <div class="form-group">
                     <label for="txt-name">Customer Name</label>
                     <input class="form-control" id="txt-name" placeholder="Eg. Lucky Prabath" type="text">
+                    <small class="form-text invalid-feedback">
+                        The Customer Name can contain only letters, spaces and periods and should have at least 3 letters.
+                    </small>
                 </div>
                 <div class="form-group">
                     <label for="txt-address">Customer Address</label>
                     <input class="form-control" id="txt-address" placeholder="Eg. #1234, Main St, Gampaha" type="text">
+                    <small class="form-text invalid-feedback">
+                        The Customer Address can't be empty, at least should have 3 letters.
+                    </small>
                 </div>
                 <hr>
                 <div class="form-group">
@@ -63,18 +69,18 @@
                 </tr>
                 </tfoot>
             </table>
-            <nav>
+            <nav class="hidden" id="pagination">
                 <ul class="pagination">
-                    <li class="page-item">
-                        <a class="page-link" href="#">
+                    <li class="page-item" id="btn-backward">
+                        <a class="page-link" href="#"
+                        onclick="document.querySelector('.pagination li:nth-child(2) a').click();">
                             <i class="fas fa-backward"></i>
                         </a>
                     </li>
-                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item active"><a class="page-link" href="#" onclick="navigatePage(event)">1</a></li>
                     <li class="page-item">
-                        <a class="page-link" href="#">
+                        <a class="page-link" href="#"
+                           onclick="document.querySelector('.pagination li:nth-child(2) a').click();">
                             <i class="fas fa-forward"></i>
                         </a>
                     </li>

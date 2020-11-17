@@ -32,9 +32,6 @@
 html {
   font-size: 14px;
 }
-.invalid{
-  border-color: red;
-}
 
 /*===============================================================================
  * Header
@@ -92,7 +89,23 @@ main {
     }
   }
 }
+.trash{
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  background-size: contain;
+  background-image: url("../img/trash.png");
 
+  &:hover{
+    background-image: url("../img/trash-hover.png");
+  }
+}
+.selected{
+  background-color: #a4cde4 !important;
+}
+.hidden{
+  visibility: hidden !important;
+}
 /*===============================================================================
  * Footer
  *===============================================================================*/
