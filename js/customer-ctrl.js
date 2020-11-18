@@ -46,10 +46,11 @@ init();
 
 function init(){
     // Todo: add the initialization code if any
-     txtID = document.getElementById("txt-id");
-     txtName = document.getElementById("txt-name");
-     txtAddress = document.getElementById("txt-address");
-     tblCustomer=document.getElementById("tbl-customers");
+
+     txtID = $("#txt-id");
+     txtName = $("#txt-name");
+     txtAddress = $("#txt-address");
+     tblCustomer=$("#tbl-customers");
 
      txtID.focus();
 }
@@ -60,11 +61,13 @@ function init(){
 
 // Todo: add all event listeners and handlers here
 
-    document.getElementById("btn-save").addEventListener("click",saveCustomer);
-    document.addEventListener('click',handleClickEventDelegation);
-    txtID.addEventListener('input',handleInput);
-    txtName.addEventListener('input',handleInput);
-    txtAddress.addEventListener('input',handleInput);
+    $("#btn-save").on("click",saveCustomer);
+    $("#btn-clear").on("click",clearFiels);
+    $(document).on('click',handleClickEventDelegation);
+    txtID.on('input',handleInput);
+    txtID.on('input',validateCusID);
+    txtName.on('input',handleInput);
+    txtAddress.on('input',handleInput);
 
 /*===============================================================================
  * Functions
@@ -75,7 +78,7 @@ function init(){
 function handleClickEventDelegation(event){
     if(event.target){
         var activePage;
-        if(event.target.matches('#btn-backward *')){
+        if($(event.target).is('#btn-backward *')){
             activePage=startPageIndex;
             endPageIndex=startPageIndex-1;
             startPageIndex=endPageIndex-(maxPages-1);
@@ -86,7 +89,7 @@ function handleClickEventDelegation(event){
             }
             initPagination();
             renderPage(activePage);
-        }else if(event.target.matches('#btn-forward *')){
+        }else if($(event.target).is('#btn-forward *')){
             startPageIndex=startPageIndex+maxPages;
             activePage=startPageIndex+1;
             endPageIndex=startPageIndex+(maxPages-1);
@@ -96,7 +99,7 @@ function handleClickEventDelegation(event){
             }
             initPagination();
             renderPage(activePage);
-        }else if(event.target.matches('li.page-item *')){
+        }else if($(event.target).is('li.page-item *')){
             renderPage(+event.target.innerText);
         }
     }
@@ -106,24 +109,21 @@ function addCustomersToTable(startIndex,endIndex){
         endIndex=customers.length;
     }
     for (var i=startIndex; i<endIndex; i++){
-         var row=tblCustomer.tBodies.item(0).insertRow(-1);
-          row.onclick=handleSelection;
-
-          row.insertCell(0).innerText=customers[i].id;
-          row.insertCell(1).innerText=customers[i].name;
-          row.insertCell(2).innerText=customers[i].address;
-
-          var trashCell=row.insertCell(3);
-          trashCell.innerHTML='<div class="trash" onclick="handleDelete(event)"></div>';
+         $("#tbl-customers tbody").append('<tr onclick="handleSelection(event)">' +
+             '<td>'+customers[i].id+'</td>' +
+             '<td>'+customers[i].name+'</td>' +
+             '<td>'+customers[i].address+'</td>' +
+             '<td><div class="trash" onclick="handleDelete(event)"></div></td>' +
+             '</tr>');
     }
 }
 function clearTable(){
-    for(var i=tblCustomer.tBodies[0].rows.length-1;i>=0;i--){
-        tblCustomer.tBodies[0].deleteRow(i);
+    for(var i=$("#tbl-customers>tbody>tr").length-1;i>=0;i--){
+        $("#tbl-customers>tbody>tr").remove(i);
     }
 }
 function initPagination(){
-    var paginationElm = document.querySelector("#pagination");
+    var paginationElm = $("#pagination");
     pagesize=-1;
     clearTable();
     if(customers.length>0){
@@ -131,16 +131,16 @@ function initPagination(){
             pagesize=6;
         }else{
             addCustomersToTable(0,1);
-            var topPosition=tblCustomer.tBodies[0].rows[0].getBoundingClientRect().top;
-            var rowHeight=tblCustomer.tBodies[0].rows[0].clientHeight;
-            var paginationHeight=paginationElm.clientHeight;
+            var topPosition=($("#tbl-customers>tbody>tr:first").offset().top);
+            var rowHeight=$("#tbl-customers>tbody>tr:first").innerHeight();
+            var paginationHeight=paginationElm.innerHeight();
             var margin = 40;
             var i=1;
 
             do{
                 var totalHeight=topPosition+(rowHeight*i)+paginationHeight+margin;
                 i++;
-            }while(totalHeight<document.querySelector("footer").getBoundingClientRect().top);
+            }while(totalHeight<$("footer").offset().top);
             pagesize=i-2;
             clearTable();
         }
@@ -152,9 +152,9 @@ function initPagination(){
     }
 
     if(pagesize>1){
-        paginationElm.classList.remove("hidden");
+        paginationElm.removeClass("hidden");
     }else{
-        paginationElm.classList.add("hidden");
+        paginationElm.addClass("hidden");
     }
 
     if(endPageIndex===-1){
@@ -174,7 +174,7 @@ function initPagination(){
     html += '<li class="page-item" id="btn-forward">' +
         '          <a class="page-link" href="#"><i class="fas fa-forward"></i></a>' +
         '    </li>';
-    document.querySelector(".pagination").innerHTML=html;
+    $(".pagination").html(html);
     endPageIndex=-1;
 }
 function renderPage(page){
@@ -187,34 +187,33 @@ function renderPage(page){
     if(page>pageCount){
         page=pageCount;
     }
-    var exActivePage=document.querySelector("#pagination .page-item.active");
+    var exActivePage=$("#pagination .page-item.active");
     if(exActivePage!==null){
-        exActivePage.classList.remove("active");
+        exActivePage.removeClass("active");
     }
-    document.querySelector('.pagination li:nth-child('+(page+1)+')').classList.add('active');
+    $(".pagination li:nth-child("+(page+1)+")").addClass("active");
     toggleBackwardForwardDisability(page);
     clearTable();
     addCustomersToTable((page-1)*pagesize,page*pagesize);
 }
 function toggleBackwardForwardDisability(page){
     if(page==1){
-        document.querySelector('#btn-backward').classList.add('disabled');
+        $('#btn-backward').addClass('disabled');
     }else{
-        document.querySelector('#btn-backward').classList.remove('disabled');
+        $('#btn-backward').removeClass('disabled');
     }
     if (page == pageCount) {
-        document.querySelector("#btn-forward").classList.add("disabled");
+        $("#btn-forward").addClass("disabled");
     } else {
-        document.querySelector("#btn-forward").classList.remove("disabled");
+        $("#btn-forward").removeClass("disabled");
     }
 }
 function handleInput(){
-    this.classList.remove('is-invalid');
+    $(this).removeClass('is-invalid');
 }
 function clearSelection(){
-    var rows=document.querySelectorAll('#tbl-customers tbody tr');
-    for (var i=0; i<rows.length;i++){
-        rows[i].classList.remove("selected");
+    for (var i=1; i<=$("#tbl-customers>tbody>tr").length;i++){
+        $("#tbl-customers>tbody>tr:nth-child("+i+")").removeClass('selected');
     }
     txtID.disabled=false;
     selectedRow=null;
@@ -222,41 +221,42 @@ function clearSelection(){
 }
 function handleSelection(event) {
     clearSelection();
-    selectedRow=event.target.parentElement;
-    selectedRow.classList.add("selected");
-    txtID.value=selectedRow.cells[0].innerText;
-    txtID.disabled=true;
-    txtName.value=selectedRow.cells[1].innerText;
-    txtAddress.value=selectedRow.cells[2].innerText;
+    selectedRow=$(event.target).parent();
+    selectedRow.addClass('selected');
+    txtID.val(selectedRow.children('td:first').text());
+    txtID.attr("disabled",true);
+    txtName.val(selectedRow.children('td:nth-child(2)').text());
+    txtAddress.val(selectedRow.children('td:nth-child(3)').text());
     selectedCustomer=customers.find(function (c){
-        return c.id === selectedRow.cells[0].innerText;
+        return c.id === selectedRow.children('td:first').text();
     });
 }
 function handleDelete(event){
     if(confirm("Are you sure whether you want to delete this customer?")){
-        tblCustomer.deleteRow(event.target.parentElement.parentElement.rowIndex);
-        txtID.value='';
-        txtName.value='';
-        txtAddress.value='';
-        txtID.disabled=false;
+        var index=$(event.target).parent().parent().index();
+        $("#tbl-customers>tbody>tr:nth-child("+index+")").remove();
+        txtID.val("");
+        txtName.val("");
+        txtAddress.val("");
+        txtID.attr("disabled",false);
         txtID.focus();
         showOrHideFooter(event);
 
         customers.splice(customers.findIndex(function (c){
-            return c.id===event.target.parentElement.parentElement.cells[0].innerText;
+            return c.id===$(event.target).parent().parent().children('td:first').text();
         }),1);
-        var activePage = +document.querySelector(".pagination .active").innerText;
+        var activePage = +$(".pagination .active").text();
         initPagination();
         renderPage(activePage ? activePage : 1);
-        showOrHideTFoot();
+        showOrHideFooter();
         event.stopPropagation();
     }
 }
 function showOrHideFooter(event){
-    if(tblCustomer.tBodies.item(0).rows.length>0){
-        document.querySelector("#tbl-customers tfoot").classList.add('d-none');
+    if($("#tbl-customers>tbody>tr").length>0){
+        $("#tbl-customers tfoot").addClass('d-none');
     }else{
-        document.querySelector("#tbl-customers tfoot").classList.remove('d-none');
+        $("#tbl-customers tfoot").removeClass('d-none');
     }
 }
 function saveCustomer(event){
@@ -264,51 +264,84 @@ function saveCustomer(event){
     if(validateCustomer()){
         if(!selectedCustomer){
             customers.push({
-                id:txtID.value,
-                name:txtName.value,
-                address:txtAddress.value
+                id:txtID.val(),
+                name:txtName.val(),
+                address:txtAddress.val()
             });
 
             initPagination();
             renderPage(Math.ceil(customers.length/pagesize));
             showOrHideFooter();
 
-            txtID.value='';
-            txtName.value='';
-            txtAddress.value='';
+            txtID.val("");
+            txtName.val("");
+            txtAddress.val("");
             txtID.focus();
         }else{
-            selectedCustomer.name=txtName.value;
-            selectedCustomer.address=txtAddress.value;
+            selectedCustomer.name=txtName.val();
+            selectedCustomer.address=txtAddress.val();
 
-            selectedRow.cells[1].innerText=txtName.value;
-            selectedRow.cells[2].innerText=txtAddress.value;
+            selectedRow.children('td:nth-child(2)').text(txtName.val());
+            selectedRow.children('td:nth-child(3)').text(txtAddress.val());
         }
     }
 }
 function validateCustomer(){
-    txtID.classList.remove("is-invalid");
-    txtName.classList.remove("is-invalid");
-    txtAddress.classList.remove("is-invalid");
+    txtID.removeClass("is-invalid");
+    txtName.removeClass("is-invalid");
+    txtAddress.removeClass("is-invalid");
 
     var validated =true;
 
-    if(txtAddress.value.trim().length<3){
-        txtAddress.classList.add("is-invalid");
+    if(txtAddress.val().trim().length<3){
+        txtAddress.addClass("is-invalid");
         txtAddress.select();
         validated =false;
     }
-    if(!(/^[A-Za-z][A-Za-z .]{2,}$/.test(txtName.value))){
-        txtName.classList.add("is-invalid");
+    if(!(/^[A-Za-z][A-Za-z .]{2,}$/.test(txtName.val()))){
+        txtName.addClass("is-invalid");
         txtName.select();
         validated=false;
     }
-    if(!(/^C\d{3}$/).test(txtID.value)){
-        txtID.classList.add("is-invalid");
-        document.getElementById("helper-txt-txtID").classList.remove("text-muted");
-        document.getElementById("helper-txt-txtID").classList.add("invalid-feedback");
+    if(!(/^C\d{3}$/).test(txtID.val())){
+        txtID.addClass("is-invalid");
+        $("#helper-txt-txtID").removeClass('text-muted');
+        $("#helper-txt-txtID").addClass('invalid-feedback');
+        txtID.select();
+        validated=false;
+    }
+    if(!validateCusID()){
         txtID.select();
         validated=false;
     }
     return validated;
+}
+function clearFiels(){
+    txtID.val('');
+    txtID.attr("disabled",false);
+    txtID.focus();
+    txtName.val('');
+    txtAddress.val('');
+    clearSelection();
+    selectedRow=null;
+    selectedCustomer=null;
+}
+function validateCusID(){
+    var validCusID=true;
+    for(var i=0;i<customers.length;i++){
+        if(customers[i].id===$("#txt-id").val()){
+            validCusID=false;
+            txtID.addClass("is-invalid");
+            $("#helper-txt-txtID").text("Sorry,This Customer ID already exist.");
+            $("#helper-txt-txtID").removeClass('text-muted');
+            $("#helper-txt-txtID").addClass('invalid-feedback');
+            return validCusID;
+        }else{
+            validCusID=true;
+            $("#helper-txt-txtID").text("The Customer ID should follow the pattern CXXX; X={0-9}");
+            $("#helper-txt-txtID").removeClass('invalid-feedback');
+            $("#helper-txt-txtID").addClass('text-muted');
+        }
+    }
+    return validCusID;
 }
